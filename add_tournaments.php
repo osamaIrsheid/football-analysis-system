@@ -1,7 +1,7 @@
 <?php 
 
 include 'db_connection.php';
-/*
+
 $sql = "INSERT INTO  tournaments (tournament_name, season, tournament_type)
 VALUES ('premier league','2025/2026','League')";
 
@@ -15,5 +15,5 @@ if ($conn->query($sql) === True){
 		echo "<br>";
 }
 
-*/
+
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 04, 2026 at 05:08 PM
+-- Generation Time: Apr 10, 2026 at 09:15 AM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.13
 
@@ -114,6 +114,29 @@ CREATE TABLE IF NOT EXISTS `tournaments` (
   `season` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `tournament_type` enum('League','Cup','Continental','International') COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tournaments`
+--
+
+INSERT INTO `tournaments` (`Id`, `tournament_name`, `season`, `tournament_type`) VALUES
+(1, 'premier league', '2025/2026', 'League');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tournaments_teams`
+--
+
+DROP TABLE IF EXISTS `tournaments_teams`;
+CREATE TABLE IF NOT EXISTS `tournaments_teams` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `tournament_id` int NOT NULL,
+  `team_id` int NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `team_id` (`team_id`),
+  KEY `tournament_id` (`tournament_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -135,6 +158,13 @@ ALTER TABLE `matches`
   ADD CONSTRAINT `fk_match_home_team` FOREIGN KEY (`home_team_id`) REFERENCES `teams` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_match_round` FOREIGN KEY (`gw_round`) REFERENCES `rounds` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_match_tournament` FOREIGN KEY (`tournament_id`) REFERENCES `tournaments` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `tournaments_teams`
+--
+ALTER TABLE `tournaments_teams`
+  ADD CONSTRAINT `tournaments_teams_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `teams` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `tournaments_teams_ibfk_2` FOREIGN KEY (`tournament_id`) REFERENCES `tournaments` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
